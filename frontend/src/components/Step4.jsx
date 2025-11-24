@@ -2,17 +2,17 @@ import { useState } from "react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
 export default function Step4({ onNext, onBack }) {
-  const [belongsOtherOrg, setBelongsOtherOrg] = useState(null);
+  const [belongsSabOrg, setBelongsSabOrg] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (belongsOtherOrg === null) {
+    if (belongsSabOrg === null) {
       alert("Por favor selecciona una opción.");
       return;
     }
 
-    onNext({ belongsOtherOrg });
+    onNext({ belongsSabOrg: belongsSabOrg });
   };
 
   return (
@@ -39,7 +39,7 @@ export default function Step4({ onNext, onBack }) {
               <label
                 className={`flex items-center w-72 p-4 border rounded-xl cursor-pointer
                 ${
-                  belongsOtherOrg === true
+                  belongsSabOrg === true
                     ? "border-green-600 bg-green-100"
                     : "border-gray-300 bg-white"
                 }`}
@@ -48,8 +48,8 @@ export default function Step4({ onNext, onBack }) {
                   type="radio"
                   name="consortium"
                   value="yes"
-                  checked={belongsOtherOrg === true}
-                  onChange={() => setBelongsOtherOrg(true)}
+                  checked={belongsSabOrg === true}
+                  onChange={() => setBelongsSabOrg(true)}
                   className="hidden"
                 />
                 <span className="ml-4 text-lg font-medium">Yes</span>
@@ -58,7 +58,7 @@ export default function Step4({ onNext, onBack }) {
               <label
                 className={`flex items-center w-72 p-4 border rounded-xl cursor-pointer
                 ${
-                  belongsOtherOrg === false
+                  belongsSabOrg === false
                     ? "border-green-600 bg-green-100"
                     : "border-gray-300 bg-white"
                 }`}
@@ -67,8 +67,8 @@ export default function Step4({ onNext, onBack }) {
                   type="radio"
                   name="consortium"
                   value="no"
-                  checked={belongsOtherOrg === false}
-                  onChange={() => setBelongsOtherOrg(false)}
+                  checked={belongsSabOrg === false}
+                  onChange={() => setBelongsSabOrg(false)}
                   className="hidden"
                 />
                 <span className="ml-4 text-lg font-medium">No</span>

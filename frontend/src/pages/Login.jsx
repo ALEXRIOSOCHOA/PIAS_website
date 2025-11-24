@@ -48,7 +48,7 @@ const Login = () => {
 
   return (
     <div className="w-screen h-screen bg-gray-200 flex justify-center items-center">
-      <div className="w-[90%] sm:w-[400px] md:w-[450px] lg:w-[550px] xl:w-[580px] bg-white rounded-xl shadow-lg p-20 relative">
+      <div className="w-[90%] sm:w-[400px] md:w-[450px] lg:w-[550px] xl:w-[580px] bg-white rounded-2xl shadow-lg p-20 relative">
         <h2 className="text-2xl font-semibold text-gray-900 text-center mb-8">
           Iniciar Sesion
         </h2>

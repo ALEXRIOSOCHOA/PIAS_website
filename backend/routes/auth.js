@@ -4,13 +4,16 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
+import { v4 as uuidv4 } from "uuid";
 
 dotenv.config();
 const router = express.Router();
 
 // Nodemailer
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: process.env.EMAIL_HOST,
+  port: parseInt(process.env.EMAIL_PORT) || 587,
+  secure: false,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -25,11 +28,11 @@ router.post("/register", async (req, res) => {
       email,
       password,
       phone,
-      type_id,
       state_id,
       municipality_id,
-      belongs_other_org,
       organisation_name,
+      belongsSabOrg,
+      belongs_other_org,
     } = req.body;
 
     // Verificar si ya existe
@@ -43,23 +46,24 @@ router.post("/register", async (req, res) => {
 
     // Hashear contraseña
     const hash = await bcrypt.hash(password, 10);
-
+    const id = uuidv4();
     // Crear usuario
     const userResult = await pool.query(
       `INSERT INTO pias_users
-      (full_name, email, password_hash, phone, type_id, state_id, municipality_id, belongs_other_org, organisation_name)
-      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+      (id, full_name, email, password_hash, phone, state_id, municipality_id, organisation_name, belongs_sab_org, belongs_other_org)
+      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
       RETURNING id, email`,
       [
+        id,
         full_name,
         email,
         hash,
         phone,
-        type_id,
         state_id,
         municipality_id,
-        belongs_other_org,
         organisation_name,
+        belongsSabOrg,
+        belongs_other_org,
       ]
     );
 
@@ -67,13 +71,13 @@ router.post("/register", async (req, res) => {
 
     // Generar código de verificación
     const code = Math.floor(100000 + Math.random() * 900000).toString();
-
+    const idEmail = uuidv4();
     // Guardar en tabla de verificación
     await pool.query(
       `INSERT INTO pias_email_verifications
-      (user_id, verification_code, expires_at)
-      VALUES ($1, $2, NOW() + INTERVAL '10 minutes')`,
-      [user.id, code]
+      (id,user_id, verification_code, expires_at)
+      VALUES ($1, $2, $3, NOW() + INTERVAL '10 minutes')`,
+      [idEmail, user.id, code]
     );
 
     // Enviar email
@@ -111,32 +115,36 @@ router.post("/verify", async (req, res) => {
     // Buscar código
     const verifyResult = await pool.query(
       `SELECT * FROM pias_email_verifications
-       WHERE user_id = $1 AND verification_code = $2 AND verified = FALSE`,
-      [user.id, code]
+       WHERE user_id = $1 AND verification_code = $2 AND verified = false`,
+      [user.id, String(code)]
     );
+
+    const verify = verifyResult.rows[0];
+
+    console.log("verify:", verify);
 
     if (verifyResult.rows.length === 0)
       return res.status(400).json({ error: "Invalid or expired code" });
 
     // Marcar como verificado
     await pool.query(
-      "UPDATE pias_users SET email_verified = TRUE WHERE id = $1",
+      "UPDATE pias_users SET email_verified = true WHERE id = $1",
       [user.id]
     );
 
     await pool.query(
-      "UPDATE pias_email_verifications SET verified = TRUE WHERE id = $1",
+      "UPDATE pias_email_verifications SET verified = true WHERE id = $1",
       [verifyResult.rows[0].id]
     );
 
     // Crear token
     const token = jwt.sign(
-      { id: user.id, email: user.email, type_id: user.type_id },
+      { id: user.id, email: user.email },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
 
-    res.json({ message: "Email verified", token });
+    res.json({ message: "Email verified", token, "verified": true });
   } catch (err) {
     console.error("VERIFY ERROR:", err);
     res.status(500).json({ error: "Internal server error" });
@@ -176,6 +184,5 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
 
 export default router;

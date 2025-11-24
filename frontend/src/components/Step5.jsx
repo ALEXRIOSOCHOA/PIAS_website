@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
 export default function Step5({ onNext, onBack }) {
-  const [organisationId, setOrganisationId] = useState("");
+  const [organisationName, setOrganisationName] = useState("");
   const [organisations, setOrganisations] = useState([]);
 
   useEffect(() => {
@@ -28,12 +28,12 @@ export default function Step5({ onNext, onBack }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!organisationId) {
+    if (!organisationName) {
       alert("Por favor selecciona una organización.");
       return;
     }
 
-    onNext({ organisation_id: organisationId });
+    onNext({ organisation_name: organisationName });
   };
 
   return (
@@ -61,14 +61,14 @@ export default function Step5({ onNext, onBack }) {
           >
             <div className="relative w-full mt-6">
               <select
-                value={organisationId}
-                onChange={(e) => setOrganisationId(e.target.value)}
+                value={organisationName}
+                onChange={(e) => setOrganisationName(e.target.value)}
                 required
                 className="peer block w-full border-b border-gray-300 text-gray-900 bg-transparent focus:outline-none py-2"
               >
                 <option value="" disabled hidden></option>
                 {organisations.map((org) => (
-                  <option key={org.id} value={org.id}>
+                  <option key={org.id} value={org.name}>
                     {org.name}
                   </option>
                 ))}

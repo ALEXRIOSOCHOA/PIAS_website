@@ -13,7 +13,7 @@ export default function Step7({ onNext, onBack, otherOrganisations = [] }) {
     }
 
     // 🔹 Enviar el nombre EXACTO que el backend espera
-    onNext({ organisation_name: organisation });
+    onNext({ other_organization: organisation });
   };
 
   return (

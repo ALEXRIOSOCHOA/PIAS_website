@@ -3,7 +3,7 @@ import logo from "../assets/logo_saberes.png";
 import { AiOutlineClose } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
-export default function Step1({ onNext, userTypes }) {
+export default function Step1({ onNext }) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     full_name: "",
@@ -11,7 +11,6 @@ export default function Step1({ onNext, userTypes }) {
     phone: "",
     password: "",
     confirmPassword: "",
-    type_id: "",
     accepted: false,
   });
 
@@ -36,17 +35,12 @@ export default function Step1({ onNext, userTypes }) {
       return;
     }
 
-    // if (!formData.type_id) {
-    //   alert("Selecciona un tipo de usuario.");
-    //   return;
-    // }
 
     const step1Data = {
       full_name: formData.full_name,
       email: formData.email,
       phone: formData.phone,
       password: formData.password,
-      type_id: Number(formData.type_id),
     };
 
     onNext(step1Data);
@@ -135,20 +129,6 @@ export default function Step1({ onNext, userTypes }) {
               </label>
             </div>
 
-            {/* <select
-              name="type_id"
-              value={formData.type_id}
-              onChange={handleChange}
-              className="w-full border-b border-gray-300 py-2"
-              required
-            >
-              <option value="">Select user type</option>
-              {userTypes.map((t) => (
-                <option key={t.id} value={t.id}>
-                  {t.name}
-                </option>
-              ))}
-            </select> */}
             <div className="relative w-full mt-6">
               <input
                 type="password"
@@ -211,7 +191,7 @@ export default function Step1({ onNext, userTypes }) {
               type="submit"
               className="w-full bg-black text-white py-3 rounded-xl"
             >
-              Continue
+              Continuar
             </button>
           </form>
         </div>
