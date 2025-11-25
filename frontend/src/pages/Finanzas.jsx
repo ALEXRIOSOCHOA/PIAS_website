@@ -1,8 +1,8 @@
 // src/pages/Practicas.jsx
 import React, { useState } from "react";
-import PracticasAbE from "../components/Practicas/PracticasAbE";
-import UsoDeSuelo from "../components/Practicas/UsoDeSuelo";
-import AnalisisDeVulnerabilidad from "../components/Practicas/AnalisisDeVulnerabilidad";
+import TendenciasDelMercado from "../components/Finanzas/Informacion/TendenciasDelMercado";
+import AnalisisDeLaDemanda from "../components/Finanzas/Informacion/AnalisisDeLaDemanda";
+import IngresosPorPractica from "../components/Finanzas/Informacion/IngresosPorPractica";
 
 // Componente reutilizable para las pestañas
 const TabItem = ({ title, isActive, onClick }) => (
@@ -25,12 +25,12 @@ const TabItem = ({ title, isActive, onClick }) => (
 );
 
 export default function Practicas() {
-  const [activeTab, setActiveTab] = useState("Prácticas AbE");
+  const [activeTab, setActiveTab] = useState("Tendencias del mercado");
 
   const tabs = [
-    "Prácticas AbE",
-    "Cambio de uso de suelo",
-    "Análisis de vulnerabilidad",
+    "Tendencias del mercado",
+    "Análisis de la demanda",
+    "Ingresos por práctica AbE",
   ];
 
   return (
@@ -48,11 +48,9 @@ export default function Practicas() {
       </div>
 
       {/* Contenido por pestaña */}
-      {activeTab === "Prácticas AbE" && <PracticasAbE />}
-      {activeTab === "Cambio de uso de suelo" && <UsoDeSuelo />}
-      {activeTab === "Análisis de vulnerabilidad" && (
-        <AnalisisDeVulnerabilidad />
-      )}
+      {activeTab === "Tendencias del mercado" && <TendenciasDelMercado />}
+      {activeTab === "Análisis de la demanda" && <AnalisisDeLaDemanda />}
+      {activeTab === "Ingresos por práctica AbE" && <IngresosPorPractica />}
     </div>
   );
 }

@@ -6,6 +6,7 @@ import Reportes from "./pages/Reportes";
 import Perfil from "./pages/Perfil";
 import Practicas from "./pages/Practicas";
 import Predashboard from "./components/verificacionExitosa";
+import Finanzas from "./pages/Finanzas";
 import MainLayout from "./Main/MainLayoud";
 import "./App.css";
 
@@ -34,6 +35,10 @@ function App() {
         </Route>
         <Route element={<LayoutWrapper headerText="Practicas" />}>
           <Route path="/practicas" element={<Practicas />} />
+          {/* Aquí puedes agregar más rutas internas con distintos headerText */}
+        </Route>
+        <Route element={<LayoutWrapper headerText="Información" />}>
+          <Route path="/finanzas/informacion" element={<Finanzas />} />
           {/* Aquí puedes agregar más rutas internas con distintos headerText */}
         </Route>
       </Routes>

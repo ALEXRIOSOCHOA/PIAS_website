@@ -28,7 +28,6 @@ export default function Sidebar() {
       <img src={logo} alt="logo" className="mb-8" />
 
       <nav className="flex flex-col gap-3">
-
         {/* Enlace Prácticas */}
         <button>
           <Link
@@ -78,9 +77,12 @@ export default function Sidebar() {
             `}
           >
             <div className="flex flex-col gap-2 mt-2">
-              <button className="flex items-center gap-3 py-2 px-2 rounded-md text-sm hover:bg-gray-100 transition">
-                Información
-              </button>
+              <Link
+                to="/finanzas/informacion"
+                className="flex items-center gap-3 py-2 px-2 rounded-md text-sm hover:bg-gray-100 transition"
+              >
+                <button>Información</button>
+              </Link>
             </div>
           </div>
         </div>

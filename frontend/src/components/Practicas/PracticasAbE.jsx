@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import iconFlechaAbajo from "../../assets/icons/angle-down.svg";
 import slidersVertical from "../../assets/icons/sliders-vertical.svg";
+import iconCheckBox from "../../assets/icons/checkbox.svg";
 
 // Leaflet
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
@@ -142,7 +143,7 @@ export default function PracticasAbE() {
                     }
                   `}
                 >
-                  <div className="w-4 h-4 relative">
+                  <div className="w-4 h-4 relative flex items-center justify-center">
                     <div
                       className={`
                         w-4 h-4 rounded-md border
@@ -153,6 +154,13 @@ export default function PracticasAbE() {
                         }
                       `}
                     />
+                    {selected && (
+                      <img
+                        src={iconCheckBox}
+                        alt="icon"
+                        className="w-5 h-5 absolute"
+                      />
+                    )}
                   </div>
                   <span className="text-black text-[15px] leading-[19.5px] text-left">
                     {option}

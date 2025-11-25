@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import iconFlechaAbajo from "../../assets/icons/angle-down.svg";
 import slidersVertical from "../../assets/icons/sliders-vertical.svg";
+import iconCheckBox from "../../assets/icons/checkbox.svg";
 
 // Leaflet
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
@@ -62,9 +63,8 @@ export default function UsoDeSuelo() {
   const [usoSelectedRango, setUsoSelectedRango] = useState("2011-2020");
   const [usoSelectedPractica, setUsoSelectedPractica] =
     useState("Cultivo Nativo");
-  const [usoSelectedEscenario, setUsoSelectedEscenario] = useState(
-    "Escenario extremo"
-  );
+  const [usoSelectedEscenario, setUsoSelectedEscenario] =
+    useState("Escenario extremo");
 
   const openUsoFilterModal = () => setIsUsoFilterModalOpen(true);
   const closeUsoFilterModal = () => setIsUsoFilterModalOpen(false);
@@ -91,7 +91,9 @@ export default function UsoDeSuelo() {
           onClick={handleToggleOptions}
           className="h-10 px-4 py-2 bg-white rounded-lg inline-flex items-center gap-2 shadow hover:bg-gray-100 transition-colors"
         >
-          <span className="text-[#101010] text-[14px] font-semibold">Vista</span>
+          <span className="text-[#101010] text-[14px] font-semibold">
+            Vista
+          </span>
           <span
             className={`transform transition-transform duration-300 ${
               isOptionsOpen ? "rotate-180" : "rotate-0"
@@ -137,7 +139,7 @@ export default function UsoDeSuelo() {
                     }
                   `}
                 >
-                  <div className="w-4 h-4 relative">
+                  <div className="w-4 h-4 relative flex items-center justify-center">
                     <div
                       className={`
                         w-4 h-4 rounded-md border
@@ -148,6 +150,13 @@ export default function UsoDeSuelo() {
                         }
                       `}
                     />
+                    {selected && (
+                      <img
+                        src={iconCheckBox}
+                        alt="icon"
+                        className="w-5 h-5 absolute"
+                      />
+                    )}
                   </div>
                   <span className="text-black text-[15px] leading-[19.5px] text-left">
                     {option}
@@ -277,9 +286,7 @@ export default function UsoDeSuelo() {
                           )}
                         </div>
                       </div>
-                      <span className="text-[15px] leading-[19.5px]">
-                        {p}
-                      </span>
+                      <span className="text-[15px] leading-[19.5px]">{p}</span>
                     </button>
                   );
                 })}
